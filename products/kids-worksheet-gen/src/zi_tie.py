@@ -175,7 +175,7 @@ def _draw_row(
     if opt.mode == MIAOHONG:
         guide_gray, guide_count = True, opt.guide_cells_per_row
     elif opt.mode == LINMO:
-        guide_gray, guide_count = False, 1
+        guide_gray, guide_count = False, opt.guide_cells_per_row
     else:  # HUNHE
         if row_index % 2 == 0:
             guide_gray, guide_count = True, opt.guide_cells_per_row
