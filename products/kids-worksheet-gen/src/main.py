@@ -20,8 +20,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from core import GRADES, GenerationError, generate_problems  # noqa: E402
 from pdf_render import SheetOptions, render_sheet  # noqa: E402
+from resource_path import char_file_default  # noqa: E402
 
-DEFAULT_CHAR_FILE = Path(__file__).resolve().parent.parent / "assets" / "chars_3500.txt"
+DEFAULT_CHAR_FILE = char_file_default()
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -55,6 +56,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--no-name-line", action="store_true", help="不打印姓名/日期信息栏")
     p.add_argument("--seed", type=int, default=None, help="随机种子，同种子出同一套题（口算模式）")
     p.add_argument("--list-grades", action="store_true", help="列出所有口算题型代码后退出")
+    p.add_argument("--doctor", action="store_true",
+                   help="自检运行环境（字体/字表/依赖），打包后排查问题用")
 
     # ---- 批量出卷（内容包生产）----
     g = p.add_argument_group("批量出卷（内容包生产）")
@@ -248,8 +251,59 @@ def run_zitie_mode(args) -> int:
     return 0
 
 
+def run_doctor() -> int:
+    """自检：打包后排查"字体找不到 / 字表找不到"用。"""
+    import resource_path
+
+    print("=== 运行环境自检 ===\n")
+    print(resource_path.describe())
+    print()
+
+    ok = True
+
+    # 字体
+    try:
+        from fonts import describe as font_describe
+
+        print(f"中文字体: {font_describe()}")
+    except Exception as e:
+        print(f"中文字体: ❌ {e}")
+        ok = False
+
+    # 字表
+    cf = resource_path.char_file_default()
+    if cf.exists():
+        try:
+            from zi_tie import load_chars_from_file
+
+            n = len(load_chars_from_file(cf))
+            print(f"字表字数: {n}")
+        except Exception as e:
+            print(f"字表读取: ❌ {e}")
+            ok = False
+    else:
+        print("字表读取: ❌ 文件不存在（打包时 --add-data 没配对）")
+        ok = False
+
+    # PDF 库
+    try:
+        import reportlab
+
+        print(f"reportlab: {reportlab.Version}")
+    except Exception as e:
+        print(f"reportlab: ❌ {e}")
+        ok = False
+
+    print()
+    print("✅ 自检通过" if ok else "❌ 自检发现问题，见上方 ❌ 项")
+    return 0 if ok else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.doctor:
+        return run_doctor()
 
     if args.list_grades:
         list_grades()

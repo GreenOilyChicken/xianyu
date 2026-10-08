@@ -1,5 +1,7 @@
-# 口算练习生成器 · 依赖
+# 口算练习生成器 · 运行依赖
 # 安装：pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+#
+# 打包 exe 时改用：pip install -r requirements-build.txt
 
 reportlab==5.0.1
 pillow>=12.0.0

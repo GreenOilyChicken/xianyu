@@ -1,0 +1,14 @@
+# 打包依赖（在 Windows 上打包 exe 时用）
+#
+# 安装：
+#   pip install -r requirements-build.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+-r requirements.txt
+
+# ★ setuptools 必须锁在 81 以下
+# 原因：PyInstaller 的依赖 altgraph 仍然 `import pkg_resources`，
+#       而 setuptools 81+ 已彻底移除该模块。
+# 不锁会报：ModuleNotFoundError: No module named 'pkg_resources'
+setuptools<81
+
+pyinstaller>=6.0
