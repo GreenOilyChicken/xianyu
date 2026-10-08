@@ -1,0 +1,9 @@
+# 口算练习生成器 · 依赖
+# 安装：pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+reportlab==5.0.1
+pillow>=12.0.0
+
+# 仅开发/测试用（打包时不需要）
+pytest>=8.0
+pypdfium2>=5.0

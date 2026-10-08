@@ -1,0 +1,12 @@
+# Local runtime artifacts
+.venv/
+__pycache__/
+*.pyc
+*.tmp
+*.egg-info/
+build/
+dist/
+
+# Never commit credentials or scraped user data
+storage_state.json
+cookie*.txt

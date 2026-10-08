@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xianyu-search"
+version = "0.2.0"
+description = "闲鱼(goofish.com)行情抓取与分析：搜索 → 抓取 → 多维分析报告 → 趋势/历史/监控/导出"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "xianyu-search contributors" }]
+keywords = ["xianyu", "goofish", "scraper", "second-hand", "market-analysis", "闲鱼"]
+dependencies = [
+    "httpx>=0.27",
+    "playwright>=1.44",
+]
+
+[project.scripts]
+xianyu = "scripts.xianyu:main"
+
+[tool.setuptools]
+packages = ["scripts"]

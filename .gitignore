@@ -1,0 +1,67 @@
+# ---- 敏感：账号凭证，绝不入库 ----
+# .xianyu-data/ 含闲鱼登录 cookie（_tb_token_、cookie2 等），推上去等于账号被盗
+.xianyu-data/
+# x5sec 风控令牌
+x5sec.txt
+storage_state.json
+*.db
+
+# ---- 隐私：含他人手机号等个人信息 ----
+# ops/data/ 是闲鱼抓取结果，含买卖双方联系方式
+ops/data/
+
+# ---- 本地临时/测试 ----
+.tmp-test/
+.cursor/
+.code/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+libs/
+
+# ---- 打包产物 ----
+build/
+dist/
+*.spec
+*.exe
+*.msi
+
+# ---- 生成的内容包（体积大，可由代码重新生成）----
+products/kids-worksheet-gen/out/
+
+# ---- adb 二进制（体积大，按文档自行下载）----
+# 见 products/photo-sorter/README-依赖下载.md
+products/photo-sorter/assets/adb/
+
+# ---- Flutter ----
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ---- 编辑器/系统 ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- 日志 ----
+*.log
+logs/

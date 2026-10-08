@@ -1,0 +1,10 @@
+# 开发产物，不进 git
+libs/
+out/
+build/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.spec
+.venv/

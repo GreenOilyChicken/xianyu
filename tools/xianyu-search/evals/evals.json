@@ -1,0 +1,29 @@
+{
+  "skill_name": "xianyu-search",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我查一下闲鱼上 iPhone 15 Pro 的行情，抓一下在售数据，分析价格分布，告诉我现在什么价位比较合理、有没有坑。",
+      "expected_output": "Agent 遵循 skill 流程：先 doctor 检查环境，发现未登录后引导扫码登录（不编造数据）；无法由用户完成登录时，明确停在登录交接点并说明下一步（login / cookie-stdin），绝不虚构商品与价格。",
+      "files": [],
+      "assertions": [
+        "runs_doctor: 输出了环境检查（doctor）的执行或结果，识别出缺少登录态/需要登录",
+        "no_fabricated_data: 没有把任何商品、价格、卖家当作真实抓取数据呈现（未登录时不得编造行情）",
+        "login_handoff: 明确告诉用户下一步是扫码登录（login 命令）或 Cookie 导入（--cookie-stdin），而不是声称已抓到数据",
+        "analysis_plan: 说明了抓取后如何生成分析（analyze 命令/报告内容）"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我最近想蹲一台二手 MacBook Air M2（预算 3500-6000，最好上海地区），帮我抓闲鱼数据做分析，另外告诉我以后怎么监控上新。",
+      "expected_output": "Agent 使用 skill 的 search（带 --min-price/--max-price/--location）与 analyze 生成报告；给出 watch / 计划任务的监控方案；同样在未登录时如实说明并停在登录交接点，不编数据。",
+      "files": [],
+      "assertions": [
+        "filters_used: 抓取命令带上了价格区间与地区过滤（--min-price/--max-price/--location）",
+        "monitoring_plan: 给出了上新监控方案（watch 命令或系统计划任务），并尊重 30 分钟最小间隔",
+        "no_fabricated_data: 没有把任何商品、价格、卖家当作真实抓取数据呈现",
+        "login_handoff: 未登录时如实说明并把扫码登录/Cookie 导入作为下一步，而不是声称已抓到数据"
+      ]
+    }
+  ]
+}
